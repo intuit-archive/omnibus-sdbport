@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rm -f /usr/bin/sdbport
+
+ln -sf /opt/sdbport/bin/sdbport /usr/bin
+
+exit 0
