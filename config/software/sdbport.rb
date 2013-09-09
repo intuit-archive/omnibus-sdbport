@@ -1,5 +1,5 @@
 name    "sdbport"
-version "0.4.1"
+version ENV['version']
 
 dependencies ["libxslt", "libxml2", "rubygems", "ruby"]
 
