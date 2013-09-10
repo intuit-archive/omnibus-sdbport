@@ -17,6 +17,11 @@ access_key = <%= "#{ENV['AWS_ACCESS_KEY_ID']}" %>
 secret_key = <%= "#{ENV['AWS_SECRET_ACCESS_KEY']}" %>
 EOS
 
+# Set version for build
+export version=<%= "#{ENV['version']}" %>
+export iteration=<%= "#{ENV['iteration']}" %>
+
+
 # Install Required RPMs
 yum install -y --quiet intu-ruby git s3cmd rpm-build
 
@@ -29,11 +34,17 @@ git clone --quiet https://github.com/intuit/omnibus-sdbport.git /var/tmp/omnibus
 # Change directory to build cloned repo
 cd /var/tmp/omnibus-sdbport
 
+# Use appropriate build branch if passed via Jenkins UI
+branch=<%= "#{ENV['GIT_BRANCH']}" %>
+if [ -n "$branch" ];then
+  git checkout --track origin/${branch}
+fi
+
 # Install Bundle
-bundle install --quiet
+bundle install --quiet --binstubs
 
 # Build aws_cli RPM
-bundle exec rake projects:sdbport
+bin/omnibus build project sdbport
 
 # Upload RPM to Omnibus package bucket
 for rpm in $(ls -d /var/cache/omnibus/pkg/sdbport*.rpm); do
