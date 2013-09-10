@@ -10,7 +10,7 @@ To build the sdbport RPM on the local system:
 	gem install bundler -v 1.2.2 --no-ri --no-rdoc --quiet
 	git clone --quiet https://github.com/intuit/omnibus-sdbport.git /var/tmp/omnibus-sdbport
 	cd /var/tmp/omnibus-sdbport
-	bundle install --quiet
+	bundle install --quiet --binstubs
 	bin/omnibus build project sdbport
 
 ## Continuous Integration
